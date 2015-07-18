@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" charset="utf-8" src="/javascript/common/common.js"></script>
+<script type="text/javascript" charset="utf-8" src="/javascript/business/register.js"> </script>
+<title></title>
+
+<script type="text/javascript">
+	function init(){
+		Register.checkUserName();
+		Register.checkUserCosName();
+	}
+</script>
+</head>
+<body>
+	<form action="/register" method="post">
+		<div>
+			<table style="border:0;">
+				   <tbody>
+				   		<tr>
+				   			<td><span>用户名:</span></td>
+				   			
+				   			<td><input type="text" id="userLoginName" name="userLoginName"></td>
+				   			<td><div id="userLoginNameError"></div></td>
+				   		</tr>
+				   		<tr>
+				   			<td><span>昵称:</span></td>
+				   			
+				   			<td><input type="text" id="userCosName" name="userCosName"></td>
+				   			<td><div id="userLoginCosNameError"></div></td>
+				   		</tr>
+				   		<tr>
+				   			<td><span>密码:</span></td>
+				   			
+				   			<td><input type="text" id="userPassWord" name="userPassWord"></td>
+				   		</tr>
+				   </tbody>
+			</table>
+		</div>
+		<input type="submit" />
+	</form>
+</body>
+
+</html>
+<script type="text/javascript">
+	init();
+</script>
+

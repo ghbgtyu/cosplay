@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<configuration status="error" monitorInterval="1800">
+	<properties>
+		<property name="LOG_HOME">D://cosplay/log</property>
+	 	<property name="MINUTE_HOME">D://cosplay/log/minute</property> 
+		<property name="HOUR_HOME">D://cosplay/log/hour</property> 
+		
+		
+	</properties>
+	
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+      		<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    	</Console>
+    	<!-- 错误日志 -->
+    	<RollingFile name="error_appender" fileName="${LOG_HOME}/error.log" filePattern="${LOG_HOME}/error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	<!-- 缓存日志 -->
+    	<RollingFile name="error_cache_appender" fileName="${LOG_HOME}/error_cache.log" filePattern="${LOG_HOME}/error_cache-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- IO的错误日志 -->
+    	<RollingFile name="io_error_appender" fileName="${LOG_HOME}/io-error.log" filePattern="${LOG_HOME}/io-error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+    	<!-- 开发人员日志-->
+    	<RollingFile name="dev_appender" fileName="${LOG_HOME}/dev.log" filePattern="${LOG_HOME}/dev-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- 服务器状态日志 -->
+    	<RollingFile name="server_status_appender" fileName="${LOG_HOME}/server-status.log" filePattern="${LOG_HOME}/server-status-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- 配置的错误日志 -->
+    	<RollingFile name="config_error_appender" fileName="${LOG_HOME}/config-error.log" filePattern="${LOG_HOME}/config-error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+		<!-- 框架的错误日志主要是场景指令报错 -->
+    	<RollingFile name="frame_appender" fileName="${LOG_HOME}/frame_error.log" filePattern="${LOG_HOME}/frame_error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+		<!-- 日志(1分钟) -->
+    	<RollingRandomAccessFile name="_1min_appender" fileName="${MINUTE_HOME}/minute" filePattern="${MINUTE_HOME}/minute-%d{yyyy-MM-dd-HH-mm}.log">
+    		<PatternLayout pattern="%m%n"/>
+    		<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+    	</RollingRandomAccessFile>
+    	
+    	<!-- 日志(60分钟) -->
+    	<RollingRandomAccessFile name="_60min_appender" fileName="${HOUR_HOME}/minute" filePattern="${HOUR_HOME}/minute-%d{yyyy-MM-dd-HH-mm}.log">
+    		<PatternLayout pattern="%m%n"/>
+    		<Policies>
+				<TimeBasedTriggeringPolicy interval="60" modulate="true" />
+			</Policies>
+    	</RollingRandomAccessFile>
+
+
+	<!-- 聊天记录 -->
+<!-- 	<RollingRandomAccessFile name="_chat_log_appender"
+		fileName="${CHAT_LOG_HOME}/wukong.log" filePattern="${CHAT_LOG_HOME}/wukong_%d{yyyyMMdd}.log">
+		<Policies>
+			<TimeBasedTriggeringPolicy/>
+		</Policies>
+	</RollingRandomAccessFile> -->
+    	
+	</appenders>
+	
+	<loggers>
+	 	<logger name="org.springframework" level="warn"/>
+		
+		<logger name="org.apache.http" level="warn"/>
+		<logger name="org.apache.commons" level="warn"/>
+		<logger name="com.mchange.v2" level="error"/>
+	
+		<logger name="java.sql" level="info"/>
+		<logger name="org.quartz" level="warn"/>
+		<logger name="com.opensymphony" level="warn"/>
+		<logger name="com.sun.xml.internal.ws" level="warn"/>
+
+		<logger name="error_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="error_appender" />
+		</logger>
+		<logger name="error_cache_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="error_cache_appender" />
+		</logger>
+		<logger name="io_error_logger" additivity="true">
+			<AppenderRef ref="io_error_appender" />
+		</logger>
+		<logger name="config_error_logger" level="info" additivity="true">
+			<AppenderRef ref="config_error_appender" />
+		</logger>
+		<logger name="server_status_logger" additivity="true">
+			<AppenderRef ref="server_status_appender" />
+		</logger>
+		<logger name="frame_logger" additivity="true">
+			<AppenderRef ref="frame_appender" />
+		</logger>
+		<logger name="_1min_logger" level="error" additivity="false">
+			<AppenderRef ref="_1min_appender" />
+		</logger>
+		<logger name="_60min_logger" level="error" additivity="false">
+			<AppenderRef ref="_60min_appender" />
+		</logger>
+		<logger name="_dev_logger" level="info" additivity="true">
+			<AppenderRef ref="dev_appender" />
+		</logger>
+		<logger name="chatLog_logger" level="error" additivity="false">
+			<AppenderRef ref="_chat_log_appender" />
+		</logger>
+		
+		
+		<root level="ERROR">
+			<AppenderRef ref="Console" />
+		</root>
+		
+		
+			
+	<!-- 	<logger name="com.ibatis" level="warn"/>
+		<logger name="org.apache.mina" level="warn"/> -->
+		
+	</loggers>
+
+</configuration>

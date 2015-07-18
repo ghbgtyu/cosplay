@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server>
+
+<server>
+
+   <mongodb>
+   	  <database>test</database>
+      <userName>cosplay</userName>
+      <passWord>cosplay123</passWord>
+      <localAddress>127.0.0.1</localAddress>
+      <port>27017</port>
+   </mongodb>
+<!--     <mongodb>
+      <userName>root</userName>
+      <passWord>cosplaypwd</passWord>
+      <localAddress>127.0.0.1</localAddress>
+      <port>27017</port>
+   </mongodb>  -->
+
+</server>
+
+   

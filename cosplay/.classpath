@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_45">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="web/lib/c3p0-0.9.5-pre6.jar"/>
+	<classpathentry kind="lib" path="web/lib/commons-io-2.0.1.jar"/>
+	<classpathentry kind="lib" path="web/lib/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="web/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="web/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="web/lib/fastjson-1.1.35.jar"/>
+	<classpathentry kind="lib" path="web/lib/freemarker.jar"/>
+	<classpathentry kind="lib" path="web/lib/jackson-core-2.2.0-rc1.jar"/>
+	<classpathentry kind="lib" path="web/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="web/lib/log4j-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="web/lib/log4j-core-2.0.2.jar"/>
+	<classpathentry kind="lib" path="web/lib/log4j-slf4j-impl-2.0.jar"/>
+	<classpathentry kind="lib" path="web/lib/mchange-commons-java-0.2.6.3.jar"/>
+	<classpathentry kind="lib" path="web/lib/mongo-java-driver-2.12.1.jar"/>
+	<classpathentry kind="lib" path="web/lib/org.codehaus.jackson-1.0.0.jar"/>
+	<classpathentry kind="lib" path="web/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-aop-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-aspects-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-beans-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-context-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-context-support-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-core-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-expression-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-framework-bom-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-instrument-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-web-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="web/lib/spring/spring-webmvc-4.0.6.RELEASE.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
