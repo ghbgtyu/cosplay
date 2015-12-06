@@ -25,4 +25,9 @@ class LoginContext {
 	boolean isExist(String key){
 		return loginCache.cacheContainsKey(key);
 	}
+	
+	/**注销登录*/
+	LoginUserEntity exit(String key){
+		return loginCache.cacheDelete(key);
+	}
 }

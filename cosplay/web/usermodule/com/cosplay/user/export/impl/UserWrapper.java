@@ -1,12 +1,14 @@
 package com.cosplay.user.export.impl;
 
+import org.bson.types.ObjectId;
+
 public class UserWrapper {
 	private String userLoginName;
 	private String userLoginCosName;
-	private Object userId;
+	private ObjectId userId;
 	
 	
-	public Object getUserId() {
+	public ObjectId getUserId() {
 		return userId;
 	}
 	public String getUserLoginCosName() {
@@ -15,7 +17,7 @@ public class UserWrapper {
 	public String getUserLoginName() {
 		return userLoginName;
 	}
-	void setUserId(Object userId) {
+	void setUserId(ObjectId userId) {
 		this.userId = userId;
 	}
 	public void setUserLoginCosName(String userLoginCosName) {

@@ -70,4 +70,8 @@ public class CacheContext<K,V> {
 		
 		return readCacheContainer.get(cacheKey).get(type.hashCode()).containsKey(key);
 	}
+	
+	V cacheDelete(String cacheKey, K key,AbsBaseContainer<K,V> type) {
+		 return	readCacheContainer.get(cacheKey).get(type.hashCode()).remove(key);
+	}
 }

@@ -7,4 +7,6 @@ public class EventPublicType {
 	public static final String LOGIN_EVENT = "login_event";
 	/***用户上线事件*/
 	public static final String LOGIN_ONLINE = "login_online";
+	/***用户下线事件*/
+	public static final String LOGIN_OFFLINE = "login_offline";
 }

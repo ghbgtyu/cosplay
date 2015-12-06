@@ -32,4 +32,7 @@ public interface ICacheExportService <K,V>{
 	
 	/**查询缓存中是否有该key对应的value*/
 	public boolean cacheContainsKey(K key);
+
+	/**缓存中删除*/
+	V cacheDelete(K key);
 }

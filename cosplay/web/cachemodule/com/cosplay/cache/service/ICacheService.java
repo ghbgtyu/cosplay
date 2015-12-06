@@ -37,4 +37,7 @@ public interface ICacheService <K,V,T extends AbsBaseContainer<K,V>>{
 
 	/**查询缓存中是否有该key对应的value*/
 	boolean cacheContainsKey(String cacheKey, K key, AbsBaseContainer<K, V> type);
+
+
+	public V cacheDelete(String cacheKey, K key, T type);
 }

@@ -1,5 +1,7 @@
 package com.cosplay.login.entity;
 
+import org.bson.types.ObjectId;
+
 import com.cosplay.serviceserver.base.entity.IEntity;
 
 public class LoginUserEntity implements IEntity {
@@ -13,7 +15,7 @@ public class LoginUserEntity implements IEntity {
 	
 	private Boolean loginState;
 	
-	private Object userId;
+	private ObjectId userId;
 	
 	private String userLoginCosName;
 
@@ -21,7 +23,7 @@ public class LoginUserEntity implements IEntity {
 		return loginState;
 	}
 
-	public Object getUserId() {
+	public ObjectId getUserId() {
 		return userId;
 	}
 
@@ -45,7 +47,7 @@ public class LoginUserEntity implements IEntity {
 		this.loginState = loginState;
 	}
 
-	public void setUserId(Object userId) {
+	public void setUserId(ObjectId userId) {
 		this.userId = userId;
 	}
 

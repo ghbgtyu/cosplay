@@ -1,15 +1,11 @@
 package com.cosplay.cache.container;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import com.cosplay.base.util.StringUtil;
 import com.cosplay.bus.log.CosplayLog;
@@ -225,6 +221,14 @@ public class ReadOnlyCacheContainer <K,V>extends AbsBaseContainer<K,V>  implemen
 	public boolean containsKey(K key) {
 		return cacheContainerMap.containsKey(key);
 	}
+	
+	@Override
+	public V remove(Object key){
+		CacheEntity<V> cacheEntity  = cacheContainerMap.remove(key);
+		if(cacheEntity==null){return null;}
+		return cacheEntity.getData();
+	}
+	
 	@Override
 	public boolean containsValue(V value) {
 		return cacheContainerMap.containsValue(value);

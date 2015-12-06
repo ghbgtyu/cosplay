@@ -58,5 +58,13 @@ public class ReadCacheExportService<K,V> extends BaseCacheService<K, V, ReadOnly
 		}
 		return super.cacheContainsKey(cacheKey, key, readOnlyCacheContainer);
 	}
+	@Override
+	public V cacheDelete(K key){
+		if( !registerState ){
+			return null;
+		}
+		return super.cacheDelete(cacheKey, key, readOnlyCacheContainer);
+	}
+	
 	
 }

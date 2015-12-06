@@ -49,6 +49,7 @@ public abstract class AbsBaseContainer<K,V>implements Serializable{
 	public abstract V cacheLoad(K key);
 	public abstract boolean containsKey(K key);
 	public abstract boolean containsValue(V value);
+	public abstract V remove(Object key);
 	
 
 }

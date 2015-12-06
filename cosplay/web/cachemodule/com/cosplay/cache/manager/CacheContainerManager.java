@@ -1,7 +1,5 @@
 package com.cosplay.cache.manager;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import com.cosplay.cache.container.AbsBaseContainer;
 
@@ -23,6 +21,10 @@ public class CacheContainerManager<K,V> {
 	public boolean cacheContainsKey(String cacheKey,K key,AbsBaseContainer<K,V> type){
 		
 		return cacheContext.cacheContainsKey(cacheKey, key, type);
+	}
+	public V cacheDelete(String cacheKey,K key,AbsBaseContainer<K,V> type){
+		
+		return cacheContext.cacheDelete(cacheKey, key, type);
 	}
 	/**注册缓存容器
 	 * 

@@ -13,6 +13,7 @@ import com.cosplay.login.constants.LoginConstants;
 import com.cosplay.login.cookie.CookieManager;
 import com.cosplay.login.entity.LoginUserEntity;
 import com.cosplay.login.event.publish.LoginEvent;
+import com.cosplay.login.event.publish.LoginOfflineEvent;
 import com.cosplay.login.event.publish.LoginOnlineEvent;
 import com.cosplay.login.service.ILoginService;
 import com.cosplay.user.export.IUserExportService;
@@ -76,5 +77,20 @@ public class LoginServiceImpl implements ILoginService{
 		//未登录的处理-----end
 		return loginUser;
 	}
+
+
+	@Override
+	public boolean exit(HttpServletRequest request, HttpServletResponse response) {
+		//删除登录的用户
+		LoginUserEntity entity = loginContext.exit((CookieManager.getCookieValueByName(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME)));
+		if(entity!=null){
+			//被删除了 ,发布下线事件
+			EventPublicUtil.publish(new LoginOfflineEvent(entity.getUserId()));
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 
 }

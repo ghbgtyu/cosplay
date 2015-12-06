@@ -10,4 +10,7 @@ public interface ILoginService {
 	 * @param request 
 	 * @param response */
 	public LoginUserEntity doLogin(HttpServletRequest request, HttpServletResponse response, LoginUserEntity loginUser);
+	
+	/**注销登录*/
+	public boolean exit(HttpServletRequest request, HttpServletResponse response);
 }

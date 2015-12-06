@@ -33,5 +33,9 @@ public class BaseCacheService<K,V,T extends AbsBaseContainer<K,V>> implements IC
 	public boolean checkCacheKey(String cacheKey,T type) {
 		return cacheManager.registerCache(cacheKey, type);
 	}
+	@Override
+	public V cacheDelete(String cacheKey,K key,T type){
+		return cacheManager.cacheDelete(cacheKey, key, type);
+	}
 
 }
