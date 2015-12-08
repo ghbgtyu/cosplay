@@ -72,4 +72,9 @@ public class CookieManager {
 	    }
 	    return cookieMap;
 	}
+	public static void deleteCookie(HttpServletRequest request,String userLoginKeyCookieName) {
+		
+		Map<String,Cookie> cookieMap = ReadCookieMap(request);
+		cookieMap.remove(userLoginKeyCookieName);
+	}
 }
