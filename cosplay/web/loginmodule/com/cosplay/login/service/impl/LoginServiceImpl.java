@@ -3,6 +3,7 @@ package com.cosplay.login.service.impl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -90,6 +91,17 @@ public class LoginServiceImpl implements ILoginService{
 		}else{
 			return false;
 		}
+	}
+
+
+	@Override
+	public ObjectId getOnlineUserId(HttpServletRequest request) {
+		ObjectId userId = null;
+		if( loginContext.isExist((CookieManager.getCookieValueByName(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME))) ){
+			LoginUserEntity loginUser = loginContext.getLoginUserByKey(CookieManager.getCookieValueByName(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME));
+			userId = loginUser.getUserId();
+		}
+		return userId;
 	}
 	
 
