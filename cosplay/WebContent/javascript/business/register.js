@@ -29,7 +29,8 @@ Register.checkUserName = function(){
 			     }else{
 			    	 errorDom.innerHTML = "ok";
 			     }
-			   }
+			   },
+			   complete: function (XHR, TS) { XHR = null }
 			});
 		
 
@@ -54,7 +55,8 @@ Register.checkUserCosName = function(){
 			     }else{
 			    	 errorDom.innerHTML = "ok";
 			     }
-			   }
+			   },
+			   complete: function (XHR, TS) { XHR = null }
 			});
 	});
 };
