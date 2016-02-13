@@ -6,6 +6,11 @@ import com.cosplay.serviceserver.init.abstracts.AbsModuleInit;
 @Component
 public class ThreadModuleInit extends AbsModuleInit {
 
+	@Override
+	public void otherInit() {
+		
+	}
+
 	
 	
 }

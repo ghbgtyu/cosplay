@@ -17,5 +17,10 @@ public class UserModuleInit extends AbsModuleInit {
 	protected IEventHandler[] getEventHandlers() {
 		return super.getEventHandlers();
 	}
+
+	@Override
+	public void otherInit() {
+		
+	}
 	
 }

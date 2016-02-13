@@ -16,6 +16,10 @@ public interface ILoginService {
 	/**注销登录*/
 	public boolean exit(HttpServletRequest request, HttpServletResponse response);
 	
-	/**获取在线userId*/
+	/**获取在线userId
+	 * @return if null ,not login
+	 * */
 	public ObjectId getOnlineUserId(HttpServletRequest request);
+	
+	
 }

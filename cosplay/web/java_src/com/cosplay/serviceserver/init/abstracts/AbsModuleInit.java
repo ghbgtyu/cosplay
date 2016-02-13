@@ -38,5 +38,5 @@ public abstract class AbsModuleInit {
 	/**
 	 * 子类可以重写这方法，进行初始化的一些工作
 	 * */
-	protected void otherInit(){};
+	public abstract void otherInit();
 }

@@ -20,7 +20,7 @@ public class LoginAction {
 	private ILoginService loginService;
 	
 	/**Ajax 登陆用户*/
-	@RequestMapping(value="/login",method=RequestMethod.POST,params="userCosName")
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public void userLogin(HttpServletRequest request,HttpServletResponse response,LoginUserEntity loginUser){
 		//登陆操作
 		LoginUserEntity entity = loginService.doLogin(request,response,loginUser);
