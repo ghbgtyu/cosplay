@@ -7,7 +7,7 @@ import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.check.constants.CheckConstants;
 import com.cosplay.check.handler.AbsCheckHandler;
 import com.cosplay.check.model.NormalCheckResult;
-
+/**检验密码*/
 public class PwdCheckHandler extends AbsCheckHandler {
 	
 	private String pwd;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.fastjson.JSONObject;
 import com.cosplay.base.util.WebUtil;
+import com.cosplay.bus.client.ClientConstants;
 import com.cosplay.login.constants.LoginConstants;
 import com.cosplay.login.entity.LoginUserEntity;
 import com.cosplay.login.service.ILoginService;
@@ -25,7 +26,7 @@ public class LoginAction {
 		//登陆操作
 		LoginUserEntity entity = loginService.doLogin(request,response,loginUser);
 		JSONObject json = new JSONObject();
-		json.put(LoginConstants.AJAX_CHECK_LOGIN_RESULT,entity.getLoginState());
+		json.put(ClientConstants.RESULT,entity.getLoginState());
 		WebUtil.writeJSON(response, json);
 	}
 }

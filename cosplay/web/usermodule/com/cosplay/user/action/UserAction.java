@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cosplay.base.util.WebUtil;
+import com.cosplay.bus.client.ClientConstants;
+import com.cosplay.bus.code.ErrorCode;
+import com.cosplay.check.handler.impl.EmailCheckHandler;
+import com.cosplay.check.handler.impl.PwdCheckHandler;
+import com.cosplay.check.model.NormalCheckResult;
+import com.cosplay.check.service.ICheckService;
 import com.cosplay.user.constants.UserConstants;
 import com.cosplay.user.entity.UserEntity;
 import com.cosplay.user.service.IUserService;
@@ -21,6 +27,8 @@ import com.cosplay.user.service.IUserService;
 public class UserAction {
 	@Autowired
 	private IUserService registerService;
+	@Autowired
+	private ICheckService checkService;
 	
 	/**
 	 * 注册用户
@@ -41,11 +49,24 @@ public class UserAction {
 	@RequestMapping(value="/checkUserName",method=RequestMethod.POST,params="userLoginName")
 	public void checkUserName(HttpServletRequest request,HttpServletResponse response,@RequestParam("userLoginName") String userLoginName){
 		Boolean result = false;
-		if ( registerService.checkUserNameIsExist(userLoginName)){
-			result = true;
-		}
 		JSONObject json = new JSONObject();
-		json.put(UserConstants.AJAX_CHECK_USER_RESULT, result);
+		NormalCheckResult checkResult = new NormalCheckResult();
+		checkService.check(new EmailCheckHandler(checkResult,userLoginName));
+		
+		if(checkResult.isSuccess()){
+			if ( registerService.checkUserNameIsExist(userLoginName)){
+				result = true;
+			}else{
+				//用户已存在
+				json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1004);
+			}
+		}else{
+			//不是email格式的用户
+			json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1002);
+		}
+		
+	
+		json.put(ClientConstants.RESULT, result);
 		WebUtil.writeJSON(response, json);
 	};
 	
@@ -53,11 +74,21 @@ public class UserAction {
 	@RequestMapping(value="/checkUserName",method=RequestMethod.POST,params="userCosName")
 	public void checkUserCosName(HttpServletRequest request,HttpServletResponse response,@RequestParam("userCosName") String userCosName){
 		Boolean result = false;
-		if ( registerService.checkUserCosNameIsExist(userCosName)){
-			result = true;
-		}
 		JSONObject json = new JSONObject();
-		json.put(UserConstants.AJAX_CHECK_USER_RESULT, result);
+		NormalCheckResult checkResult = new NormalCheckResult();
+		checkService.check(new PwdCheckHandler(checkResult,userCosName));
+		if(checkResult.isSuccess()){
+			if ( registerService.checkUserCosNameIsExist(userCosName)){
+				result = true;
+			}else{
+				//昵称已存在
+				json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1006);
+			}
+		}else{
+			//密码格式不对
+			json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1005);
+		}
+		json.put(ClientConstants.RESULT, result);
 		WebUtil.writeJSON(response, json);
 	};
 }
