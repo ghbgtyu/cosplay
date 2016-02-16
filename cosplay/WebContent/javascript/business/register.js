@@ -2,13 +2,6 @@
 var Register ={};
 
 
-var userNameErrorInfo = "该用户名已被别人抱走";
-
-var userCosNameErrorInfo = "该昵称已经被人抱走";
-//ajax 返回json 
-var ajaxResult = "result";
-
-
 
 /**
  * 检测用户名有没有被使用
@@ -25,7 +18,7 @@ Register.checkUserName = function(){
 			   url: "/checkUserName?userLoginName="+inputDom,
 			   success: function(msg){
 			     if( msg.result == false ){
-			    	 errorDom.innerHTML = userNameErrorInfo;
+			    	 errorDom.innerHTML =ERRORCODE.getErrorMsg(msg.code);
 			     }else{
 			    	 errorDom.innerHTML = "ok";
 			     }
@@ -51,7 +44,7 @@ Register.checkUserCosName = function(){
 			   url: "/checkUserName?userCosName="+inputDom,
 			   success: function(msg){
 			     if( msg.result == false ){
-			    	 errorDom.innerHTML = userCosNameErrorInfo;
+			    	 errorDom.innerHTML =ERRORCODE.getErrorMsg(msg.code);
 			     }else{
 			    	 errorDom.innerHTML = "ok";
 			     }

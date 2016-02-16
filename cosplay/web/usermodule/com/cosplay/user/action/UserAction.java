@@ -15,10 +15,9 @@ import com.cosplay.base.util.WebUtil;
 import com.cosplay.bus.client.ClientConstants;
 import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.check.handler.impl.EmailCheckHandler;
-import com.cosplay.check.handler.impl.PwdCheckHandler;
+import com.cosplay.check.handler.impl.UserNameCheckHandler2;
 import com.cosplay.check.model.NormalCheckResult;
 import com.cosplay.check.service.ICheckService;
-import com.cosplay.user.constants.UserConstants;
 import com.cosplay.user.entity.UserEntity;
 import com.cosplay.user.service.IUserService;
 
@@ -52,7 +51,6 @@ public class UserAction {
 		JSONObject json = new JSONObject();
 		NormalCheckResult checkResult = new NormalCheckResult();
 		checkService.check(new EmailCheckHandler(checkResult,userLoginName));
-		
 		if(checkResult.isSuccess()){
 			if ( registerService.checkUserNameIsExist(userLoginName)){
 				result = true;
@@ -62,10 +60,8 @@ public class UserAction {
 			}
 		}else{
 			//不是email格式的用户
-			json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1002);
+			json.put(ClientConstants.ERROR_CODE,checkResult.getErrorCode());
 		}
-		
-	
 		json.put(ClientConstants.RESULT, result);
 		WebUtil.writeJSON(response, json);
 	};
@@ -76,7 +72,7 @@ public class UserAction {
 		Boolean result = false;
 		JSONObject json = new JSONObject();
 		NormalCheckResult checkResult = new NormalCheckResult();
-		checkService.check(new PwdCheckHandler(checkResult,userCosName));
+		checkService.check(new UserNameCheckHandler2(checkResult,userCosName));
 		if(checkResult.isSuccess()){
 			if ( registerService.checkUserCosNameIsExist(userCosName)){
 				result = true;
@@ -85,8 +81,8 @@ public class UserAction {
 				json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1006);
 			}
 		}else{
-			//密码格式不对
-			json.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1005);
+			//昵称格式不对
+			json.put(ClientConstants.ERROR_CODE,checkResult.getErrorCode());
 		}
 		json.put(ClientConstants.RESULT, result);
 		WebUtil.writeJSON(response, json);
