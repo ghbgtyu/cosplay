@@ -5,8 +5,10 @@
 <script type="text/javascript" charset="utf-8" src="/javascript/common/common.js"></script>
 <script type="text/javascript" charset="utf-8" src="/javascript/core/cn/errorcode.js"></script>
 <script type="text/javascript" charset="utf-8" src="/javascript/business/register.js"> </script>
+<script type="text/javascript" src="http://static.geetest.com/static/tools/gt.js"></script>
 <title></title>
-
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
 <script type="text/javascript">
 	function init(){
 		Register.checkUserName();
@@ -15,11 +17,11 @@
 </script>
 </head>
 <body>
-	<form action="/register" method="post">
-		<div>
+	<form id="register" action="/register" method="post">
+		<div style="top:400px;left:500px; position: absolute;">
 			<table style="border:0;">
 				   <tbody>
-				   		<tr>
+				   		<tr >
 				   			<td><span>用户名:</span></td>
 				   			
 				   			<td><input type="text" id="userLoginName" name="userLoginName"></td>
@@ -36,15 +38,47 @@
 				   			
 				   			<td><input type="text" id="userPassWord" name="userPassWord"></td>
 				   		</tr>
+				   		<tr style="height:200px;">
+				   			<td ></td>
+				   			<td></td>
+				   		</tr>
 				   </tbody>
 			</table>
+			
+		<div id="captcha"></div>
+		<div style="height:50px;"></div>
+		<input type="button" value ="注册" onclick="javascript:Register.register()" />
 		</div>
-		<input type="submit" />
+	
+		
+		
+				
 	</form>
 </body>
 
 </html>
 <script type="text/javascript">
 	init();
+	var handler = function (captchaObj) {
+        // 将验证码加到id为captcha的元素里
+        captchaObj.appendTo("#captcha");
+    };
+   $.ajax({
+       // 获取id，challenge，success（是否启用failback）
+       url: "StartCaptchaServlet",
+       type: "get",
+       dataType: "json", // 使用jsonp格式
+       success: function (data) {
+           // 使用initGeetest接口
+           // 参数1：配置参数，与创建Geetest实例时接受的参数一致
+           // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+           initGeetest({
+               gt: data.gt,
+               challenge: data.challenge,
+               product: "float", // 产品形式
+               offline: !data.success
+           }, handler);
+       }
+   });
 </script>
 

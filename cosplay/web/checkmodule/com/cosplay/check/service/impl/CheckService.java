@@ -13,16 +13,20 @@ public class CheckService implements ICheckService {
 	
 	
 	@Override
-	public void check(AbsCheckHandler... handler) {
+	public boolean check(AbsCheckHandler... handler) {
 	
+		boolean flag = true;
 		for (AbsCheckHandler h : handler) {
 			try {
-				h.check();
+				flag = h.check();
+				if(!flag){//如果有一个检验失败了，那么下面的不检验了
+					break;
+				}
 			} catch (Exception e) {
 				CosplayLog.error("检验出错", e);
 			}
 		}
-		
+		return flag;
 	}
 
 	

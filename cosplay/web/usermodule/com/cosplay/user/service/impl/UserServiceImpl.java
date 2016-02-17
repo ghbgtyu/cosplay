@@ -1,14 +1,24 @@
 package com.cosplay.user.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
+import com.cosplay.bus.client.ClientConstants;
+import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.bus.event.EventPublicUtil;
 import com.cosplay.bus.log.CosplayLog;
+import com.cosplay.check.handler.impl.EmailCheckHandler;
+import com.cosplay.check.handler.impl.GeetestCheckHandler;
+import com.cosplay.check.handler.impl.PwdCheckHandler;
+import com.cosplay.check.handler.impl.UserNameCheckHandler;
+import com.cosplay.check.model.NormalCheckResult;
+import com.cosplay.check.service.ICheckService;
 import com.cosplay.user.dao.IUserDao;
 import com.cosplay.user.entity.UserEntity;
 import com.cosplay.user.event.publish.RegisterEvent;
-import com.cosplay.user.exception.sub.ExistUserException;
 import com.cosplay.user.service.IUserService;
 
 @Component
@@ -17,31 +27,69 @@ public class UserServiceImpl implements IUserService{
 	private IUserDao registerUserDao;
 	@Autowired
 	private UserContext userContext;
-
+	@Autowired
+	private ICheckService checkService;
+	
+	
 	@Override
-	public boolean registerUser(UserEntity user){
-		boolean result = false;
+	public JSONObject registerUser(UserEntity user,HttpServletRequest request){
+		JSONObject result = null;
 		try{
-			//检查用户名
-			if(!checkUserNameIsExist(user.getUserLoginName())){
-				throw new ExistUserException();
+			result = checkRegisterUser(user, request);
+			
+			if(result !=null){
+				return result;
 			}
-			//检查昵称(cn
-			if(!checkUserCosNameIsExist(user.getUserCosName())){
-				throw new ExistUserException();
-			}
-			//进行注册用户
-			result = registerUserDao.insert(user);
+			
+			// 进行注册用户
+			boolean success = registerUserDao.insert(user);
 			EventPublicUtil.publish(new RegisterEvent(user.getUserCosName()));
-		}catch(ExistUserException e){
-			return false;
+			result = new JSONObject();
+			if(success){
+				result.put(ClientConstants.RESULT, true);
+			}else{
+				result.put(ClientConstants.RESULT, false);
+				result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1000);
+			}
 		}catch(Exception e){
-			CosplayLog.error("未知异常"+e);
-			return false;
+			CosplayLog.error("注册用户异常", e);
+			result = new JSONObject();
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1000);
 		}
+		
+		
 		return result;
 	}
 	
+	private JSONObject checkRegisterUser(UserEntity user,HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		NormalCheckResult checkResult = new NormalCheckResult();
+		checkService.check(
+				new GeetestCheckHandler(checkResult, request),
+				new EmailCheckHandler(checkResult,user.getUserLoginName()),
+				new UserNameCheckHandler(checkResult,user.getUserCosName()),
+				new PwdCheckHandler(checkResult,user.getUserPassWord()));
+		if(!checkResult.isSuccess()){
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, checkResult.getErrorCode());
+			return result;
+		}
+		// 检查用户名
+		if (!checkUserNameIsExist(user.getUserLoginName())) {
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1004);
+			return result;
+		}
+		// 检查昵称(cn
+		if (!checkUserCosNameIsExist(user.getUserCosName())) {
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE,  ErrorCode.ERROR_1006);
+			return result;
+		}
+		return null;
+	}
+
 	/**如果存在用户，返回false*/
 	@Override
 	public boolean checkUserNameIsExist(String userLoginName){

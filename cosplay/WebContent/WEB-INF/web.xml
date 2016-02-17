@@ -11,11 +11,27 @@
       <param-value>classpath:spring/spring-servlet.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    
+    
   </servlet>
+  
+  
+  
   <servlet-mapping>
     <servlet-name>spring</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  
+  
+	<servlet>
+		<servlet-name>StartCaptchaServlet</servlet-name>
+		<servlet-class>com.cosplay.check.geetest.StartCaptchaServlet</servlet-class>
+	</servlet>
+	
+  	<servlet-mapping>
+		<servlet-name>StartCaptchaServlet</servlet-name>
+		<url-pattern>/StartCaptchaServlet</url-pattern>
+	</servlet-mapping>
   
   <context-param>
 	<param-name>contextConfigLocation</param-name>

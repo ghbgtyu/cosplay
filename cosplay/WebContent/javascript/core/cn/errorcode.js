@@ -17,6 +17,7 @@ function init(){
 	register(1004,"用户已存在");
 	register(1005,"昵称格式不对");
 	register(1006,"昵称已存在");
+	register(1007,"请拖动验证码");
 }
 
 init();

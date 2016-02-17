@@ -1,6 +1,8 @@
 package com.cosplay.bus.code;
 
 public class ErrorCode {
+	/**服务端异常*/
+	public static final int ERROR_1000 = 1000;
 	/**用户未登陆*/
 	public static final int ERROR_1001 = 1001;
 	/**不是一个邮箱*/
@@ -13,4 +15,6 @@ public class ErrorCode {
 	public static final int ERROR_1005 = 1005;
 	/**昵称已存在*/
 	public static final int ERROR_1006 = 1006;
+	/**图片验证码错误*/
+	public static final int ERROR_1007 = 1007;
 }

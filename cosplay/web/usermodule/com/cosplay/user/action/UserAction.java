@@ -15,7 +15,7 @@ import com.cosplay.base.util.WebUtil;
 import com.cosplay.bus.client.ClientConstants;
 import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.check.handler.impl.EmailCheckHandler;
-import com.cosplay.check.handler.impl.UserNameCheckHandler2;
+import com.cosplay.check.handler.impl.UserNameCheckHandler;
 import com.cosplay.check.model.NormalCheckResult;
 import com.cosplay.check.service.ICheckService;
 import com.cosplay.user.entity.UserEntity;
@@ -33,16 +33,9 @@ public class UserAction {
 	 * 注册用户
 	 * */
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String registerUser(HttpServletRequest request,UserEntity user){
-		boolean result = false;
-		result = registerService.registerUser(user);
-		if ( result ){
-			return "/usermodule/jsp/success";
-			//注册成功，返回相关页面
-		}else{
-			//注册失败，返回注册页面
-			return "/usermodule/jsp/error";
-		}
+	public void registerUser(HttpServletRequest request,HttpServletResponse response,UserEntity user){
+		JSONObject result = registerService.registerUser(user,request);
+		WebUtil.writeJSON(response, result);
 	}
 	/**Ajax 验证用户名*/
 	@RequestMapping(value="/checkUserName",method=RequestMethod.POST,params="userLoginName")
@@ -72,7 +65,7 @@ public class UserAction {
 		Boolean result = false;
 		JSONObject json = new JSONObject();
 		NormalCheckResult checkResult = new NormalCheckResult();
-		checkService.check(new UserNameCheckHandler2(checkResult,userCosName));
+		checkService.check(new UserNameCheckHandler(checkResult,userCosName));
 		if(checkResult.isSuccess()){
 			if ( registerService.checkUserCosNameIsExist(userCosName)){
 				result = true;

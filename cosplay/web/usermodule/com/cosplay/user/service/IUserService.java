@@ -1,11 +1,14 @@
 package com.cosplay.user.service;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSONObject;
 import com.cosplay.user.entity.UserEntity;
 
 
 public interface IUserService {
 	/***注册用户*/
-	public boolean registerUser(UserEntity user);
+	public JSONObject registerUser(UserEntity user, HttpServletRequest request);
 	/**验证用户名是否存在*/
 	boolean checkUserNameIsExist(String userLoginName);
 	/**验证昵称是否存在*/

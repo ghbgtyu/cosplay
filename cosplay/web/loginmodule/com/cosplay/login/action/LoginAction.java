@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.fastjson.JSONObject;
 import com.cosplay.base.util.WebUtil;
 import com.cosplay.bus.client.ClientConstants;
-import com.cosplay.login.constants.LoginConstants;
 import com.cosplay.login.entity.LoginUserEntity;
 import com.cosplay.login.service.ILoginService;
 

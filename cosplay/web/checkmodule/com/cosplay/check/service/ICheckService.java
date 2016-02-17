@@ -8,5 +8,5 @@ public interface ICheckService {
 	 * 
 	 * @param handler 处理类
 	 * */
-	public void check(AbsCheckHandler ...handler);
+	public boolean check(AbsCheckHandler ...handler);
 }
