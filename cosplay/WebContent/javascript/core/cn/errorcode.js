@@ -18,6 +18,10 @@ function init(){
 	register(1005,"昵称格式不对");
 	register(1006,"昵称已存在");
 	register(1007,"请拖动验证码");
+	register(2000,"用户名为空");
+	register(2001,"密码为空");
+	register(2002,"密码不正确");
+	register(2003,"用户不存在");
 }
 
 init();

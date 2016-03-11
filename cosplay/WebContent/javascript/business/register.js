@@ -82,7 +82,8 @@ Register.register = function(){
 			if (msg.result == false) {
 				alert(ERRORCODE.getErrorMsg(msg.code));
 			} else {
-				alert("ok");
+				//转向登陆界面
+				location.href ="staticmodule/login.html";
 			}
 		},
 		async : true,

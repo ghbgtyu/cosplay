@@ -1,6 +1,5 @@
 package com.cosplay.check.geetest;
 
-import java.awt.print.Printable;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -13,13 +12,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
-import javax.print.DocFlavor.STRING;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Java SDK
@@ -66,7 +61,7 @@ public class GeetestLib {
 	/**
 	 * 调试开关，是否输出调试日志
 	 */
-	public boolean debugCode = true;
+	public boolean debugCode = false;
 	
 	/**
 	 * 极验验证API服务状态Session Key

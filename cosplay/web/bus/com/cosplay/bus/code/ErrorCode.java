@@ -17,4 +17,12 @@ public class ErrorCode {
 	public static final int ERROR_1006 = 1006;
 	/**图片验证码错误*/
 	public static final int ERROR_1007 = 1007;
+	/**用户名为空*/
+	public static final int ERROR_2000 = 2000;
+	/**密码为空*/
+	public static final int ERROR_2001 = 2001;
+	/**密码不正确 */
+	public static final int ERROR_2002 = 2002;
+	/**用户不存在*/
+	public static final int ERROR_2003 = 2003;
 }

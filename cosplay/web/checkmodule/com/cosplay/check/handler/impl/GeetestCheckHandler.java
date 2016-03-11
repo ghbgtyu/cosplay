@@ -29,9 +29,13 @@ public class GeetestCheckHandler extends AbsCheckHandler {
 		String challenge = request.getParameter(GeetestLib.fn_geetest_challenge);
 		String validate = request.getParameter(GeetestLib.fn_geetest_validate);
 		String seccode = request.getParameter(GeetestLib.fn_geetest_seccode);
-			
+		
+		Object code = request.getSession().getAttribute(gtSdk.gtServerStatusSessionKey);
+		if(code==null){
+			return false;
+		}
 		//从session中获取gt-server状态
-		int gt_server_status_code = (Integer) request.getSession().getAttribute(gtSdk.gtServerStatusSessionKey);
+		int gt_server_status_code = (Integer) code;
 		
 		int gtResult = 0;
 

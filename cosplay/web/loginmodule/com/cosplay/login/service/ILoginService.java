@@ -5,13 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bson.types.ObjectId;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cosplay.login.entity.LoginUserEntity;
 
 public interface ILoginService {
 	/***登陆操作
 	 * @param request 
 	 * @param response */
-	public LoginUserEntity doLogin(HttpServletRequest request, HttpServletResponse response, LoginUserEntity loginUser);
+	public JSONObject doLogin(HttpServletRequest request, HttpServletResponse response, LoginUserEntity loginUser);
 	
 	/**注销登录*/
 	public boolean exit(HttpServletRequest request, HttpServletResponse response);

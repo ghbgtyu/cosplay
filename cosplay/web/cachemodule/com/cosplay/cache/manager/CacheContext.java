@@ -53,6 +53,12 @@ public class CacheContext<K,V> {
 		if( !readCacheContainer.containsKey(cacheKey)){
 			return ;
 		}*/
+		if(cacheKey==null){
+			return ;
+		}
+		if(key ==null){
+			return ;
+		}
 		readCacheContainer.get(cacheKey).get(type.hashCode()).cacheInsert(key, value);
 	}
 
@@ -64,14 +70,32 @@ public class CacheContext<K,V> {
 			return null ;
 		}
 		*/
+		if(cacheKey==null){
+			return null;
+		}
+		if(key ==null){
+			return null;
+		}
 		return readCacheContainer.get(cacheKey).get(type.hashCode()).cacheLoad(key);
 	}
 	boolean cacheContainsKey(String cacheKey,K key,AbsBaseContainer<K,V> type){
+		if(cacheKey==null){
+			return false;
+		}
+		if(key ==null){
+			return false;
+		}
 		
 		return readCacheContainer.get(cacheKey).get(type.hashCode()).containsKey(key);
 	}
 	
 	V cacheDelete(String cacheKey, K key,AbsBaseContainer<K,V> type) {
+		if(cacheKey==null){
+			return null;
+		}
+		if(key ==null){
+			return null;
+		}
 		 return	readCacheContainer.get(cacheKey).get(type.hashCode()).remove(key);
 	}
 }

@@ -7,9 +7,18 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cosplay.base.util.Md5Utils;
 import com.cosplay.base.util.StringUtil;
+import com.cosplay.bus.client.ClientConstants;
+import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.bus.event.EventPublicUtil;
+import com.cosplay.check.handler.impl.EmailCheckHandler;
+import com.cosplay.check.handler.impl.GeetestCheckHandler;
+import com.cosplay.check.handler.impl.PwdCheckHandler;
+import com.cosplay.check.handler.impl.UserNameCheckHandler;
+import com.cosplay.check.model.NormalCheckResult;
+import com.cosplay.check.service.ICheckService;
 import com.cosplay.login.constants.LoginConstants;
 import com.cosplay.login.cookie.CookieManager;
 import com.cosplay.login.entity.LoginUserEntity;
@@ -19,6 +28,7 @@ import com.cosplay.login.event.publish.LoginOnlineEvent;
 import com.cosplay.login.service.ILoginService;
 import com.cosplay.user.export.IUserExportService;
 import com.cosplay.user.export.impl.UserWrapper;
+import com.cosplay.user.service.IUserService;
 
 @Component
 public class LoginServiceImpl implements ILoginService{
@@ -26,10 +36,25 @@ public class LoginServiceImpl implements ILoginService{
 	private LoginContext loginContext;
 	@Autowired
 	private IUserExportService userExportService;
-	
+	@Autowired
+	private ICheckService checkService;
+	@Autowired
+	private IUserService registerService;
 	
 	@Override
-	public LoginUserEntity doLogin(HttpServletRequest request,HttpServletResponse response,LoginUserEntity loginUser) {
+	public JSONObject doLogin(HttpServletRequest request,HttpServletResponse response,LoginUserEntity loginUser) {
+		JSONObject result = new JSONObject();
+		
+		//二维码验证
+		NormalCheckResult checkResult = new NormalCheckResult();
+		if(!checkService.check(new GeetestCheckHandler(checkResult, request))){
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_1007);
+			return result;
+		}
+		
+		
+		
 		loginUser.setLoginState(false);
 		//验证是否已登陆----start
 	/*	if( !StringUtil.strIsEmpty(loginUser.getUserLoginKey())){
@@ -42,20 +67,38 @@ public class LoginServiceImpl implements ILoginService{
 			loginUser.setLoginState(true);
 			loginContext.putLoginUserByKey(loginUser.getUserLoginKey(), loginUser);
 			EventPublicUtil.publish(new LoginOnlineEvent(loginContext.getLoginUserByKey(CookieManager.getCookieValueByName(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME)).getUserId()));
-			return loginUser;
+			result.put(ClientConstants.RESULT, true);
+			
+			return result;
 		}
 		//验证是否已登陆----end
 		
 		
 		//未登录的处理-----start
 		//为空验证
-		if( StringUtil.strIsEmpty(loginUser.getUserPassWord()) || StringUtil.strIsEmpty(loginUser.getUserLoginName()) ){
-			return loginUser;
+		if( StringUtil.strIsEmpty(loginUser.getUserLoginName()) ){
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_2000);
+			return result;
 		}
+		if(StringUtil.strIsEmpty(loginUser.getUserPassWord()) ){
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_2001);
+			return result;
+		}
+		//用户名验证
+		if(registerService.checkUserNameIsExist(loginUser.getUserLoginName())){
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_2003);
+			return result;
+		}
+		
 		//密码验证
 		UserWrapper userWrapper = userExportService.checkUserPassWord(loginUser.getUserLoginName(),loginUser.getUserPassWord());
 		if ( userWrapper == null ){
-			return loginUser;
+			result.put(ClientConstants.RESULT, false);
+			result.put(ClientConstants.ERROR_CODE, ErrorCode.ERROR_2002);
+			return result;
 		}
 		//验证通过
 		loginUser.setLoginState(true);
@@ -76,7 +119,8 @@ public class LoginServiceImpl implements ILoginService{
 		EventPublicUtil.publish(new LoginEvent(loginUser.getUserId()));
 		EventPublicUtil.publish(new LoginOnlineEvent(loginUser.getUserId()));
 		//未登录的处理-----end
-		return loginUser;
+		result.put(ClientConstants.RESULT, true);
+		return result;
 	}
 
 

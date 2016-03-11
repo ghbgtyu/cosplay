@@ -65,7 +65,7 @@
     };
    $.ajax({
        // 获取id，challenge，success（是否启用failback）
-       url: "StartCaptchaServlet",
+       url: "/StartCaptchaServlet",
        type: "get",
        dataType: "json", // 使用jsonp格式
        success: function (data) {

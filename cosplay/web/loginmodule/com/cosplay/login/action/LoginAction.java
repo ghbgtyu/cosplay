@@ -22,10 +22,11 @@ public class LoginAction {
 	/**Ajax 登陆用户*/
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public void userLogin(HttpServletRequest request,HttpServletResponse response,LoginUserEntity loginUser){
+		JSONObject result = loginService.doLogin(request,response,loginUser);
 		//登陆操作
-		LoginUserEntity entity = loginService.doLogin(request,response,loginUser);
-		JSONObject json = new JSONObject();
-		json.put(ClientConstants.RESULT,entity.getLoginState());
-		WebUtil.writeJSON(response, json);
+		//LoginUserEntity entity = loginService.doLogin(request,response,loginUser);
+		//JSONObject json = new JSONObject();
+		//json.put(ClientConstants.RESULT,entity.getLoginState());
+		WebUtil.writeJSON(response, result);
 	}
 }

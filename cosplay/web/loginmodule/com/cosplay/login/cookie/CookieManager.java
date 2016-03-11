@@ -55,6 +55,10 @@ public class CookieManager {
 	 * @return
 	 */
 	public static String getCookieValueByName(HttpServletRequest request,String name){
+		   Cookie cookie = getCookieByName(request,name);
+		   if(cookie == null){
+			   return null;
+		   }
 	       return getCookieByName(request,name).getValue();
 	}
 	/**
