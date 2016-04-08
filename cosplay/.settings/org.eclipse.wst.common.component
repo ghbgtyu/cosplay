@@ -2,6 +2,19 @@
     <wb-module deploy-name="cosplay">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/websocket"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/usermodule"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/client-io"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/upload"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/loginmodule"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/java_src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/cachemodule"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/thread"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/command"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/cosbarmodule"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/bus"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/web/checkmodule"/>
         <property name="java-output-path" value="/cosplay/build/classes"/>
         <property name="context-root" value="/"/>
     </wb-module>

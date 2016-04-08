@@ -38,3 +38,19 @@ Login.login = function(){
 	});
 	
 }
+
+Login.exit = function(){
+	jQuery.ajax({
+		   type: "POST",
+		   url: "/loginexit",
+		   success: function(msg){
+		     if( msg.result == false ){
+		    	 errorDom.innerHTML =ERRORCODE.getErrorMsg(msg.code);
+		     }else{
+		    	 errorDom.innerHTML = "ok";
+		     }
+		   },
+		   async : true,
+		   complete: function (XHR, TS) { XHR = null }
+		});
+}

@@ -15,7 +15,7 @@ public interface ILoginService {
 	public JSONObject doLogin(HttpServletRequest request, HttpServletResponse response, LoginUserEntity loginUser);
 	
 	/**注销登录*/
-	public boolean exit(HttpServletRequest request, HttpServletResponse response);
+	public JSONObject exit(HttpServletRequest request, HttpServletResponse response);
 	
 	/**获取在线userId
 	 * @return if null ,not login

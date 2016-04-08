@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.fastjson.JSONObject;
 import com.cosplay.base.util.WebUtil;
-import com.cosplay.bus.client.ClientConstants;
 import com.cosplay.login.entity.LoginUserEntity;
 import com.cosplay.login.service.ILoginService;
 
@@ -29,4 +28,13 @@ public class LoginAction {
 		//json.put(ClientConstants.RESULT,entity.getLoginState());
 		WebUtil.writeJSON(response, result);
 	}
+	
+	/**Ajax 用户注销*/
+	@RequestMapping(value="/loginexit",method=RequestMethod.POST)
+	public void userLogin(HttpServletRequest request,HttpServletResponse response){
+		JSONObject result = loginService.exit(request,response);
+		
+		WebUtil.writeJSON(response, result);
+	}
+	
 }

@@ -13,10 +13,7 @@ import com.cosplay.base.util.StringUtil;
 import com.cosplay.bus.client.ClientConstants;
 import com.cosplay.bus.code.ErrorCode;
 import com.cosplay.bus.event.EventPublicUtil;
-import com.cosplay.check.handler.impl.EmailCheckHandler;
 import com.cosplay.check.handler.impl.GeetestCheckHandler;
-import com.cosplay.check.handler.impl.PwdCheckHandler;
-import com.cosplay.check.handler.impl.UserNameCheckHandler;
 import com.cosplay.check.model.NormalCheckResult;
 import com.cosplay.check.service.ICheckService;
 import com.cosplay.login.constants.LoginConstants;
@@ -125,16 +122,23 @@ public class LoginServiceImpl implements ILoginService{
 
 
 	@Override
-	public boolean exit(HttpServletRequest request, HttpServletResponse response) {
+	public JSONObject exit(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject result = new JSONObject();
 		//删除登录的用户
 		LoginUserEntity entity = loginContext.exit((CookieManager.getCookieValueByName(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME)));
 		if(entity!=null){
 			//被删除了 ,发布下线事件
 			EventPublicUtil.publish(new LoginOfflineEvent(entity.getUserId()));
-			return true;
+			result.put(ClientConstants.RESULT, true);
+			
+			//删除cookie
+			CookieManager.deleteCookie(request, LoginConstants.USER_LOGIN_COSNAME_COOKIE_NAME);
+			CookieManager.deleteCookie(request, LoginConstants.USER_LOGIN_KEY_COOKIE_NAME);
+			CookieManager.deleteCookie(request, LoginConstants.USER_LOGIN_NAME_COOKIE_NAME);
 		}else{
-			return false;
+			result.put(ClientConstants.RESULT, true);
 		}
+		return result;
 	}
 
 
